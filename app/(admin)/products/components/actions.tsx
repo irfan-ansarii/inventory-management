@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/use-auth";
-import { ProductType, useDeleteProduct } from "@/query/products";
+import { InventoryType, ProductType, useDeleteProduct } from "@/query/products";
 
 import {
   ArchiveX,
@@ -25,7 +25,13 @@ import BarcodePopup from "./barcode-popup";
 import Inventories from "./inventories";
 import CreateAdjustments from "./create-adjustments";
 
-const Actions = ({ product }: { product: ProductType }) => {
+const Actions = ({
+  product,
+  inventory,
+}: {
+  product: ProductType;
+  inventory: InventoryType;
+}) => {
   const [deleteOpen, setDeleteOpen] = useState(false);
 
   const router = useRouter();
@@ -42,7 +48,7 @@ const Actions = ({ product }: { product: ProductType }) => {
 
   const barcodes = useMemo(() => {
     const storeInventories =
-      product.inventories.find((inv) => inv.storeId === session?.storeId)
+      inventory.find((inv: any) => inv.storeId === session?.storeId)
         ?.products || [];
 
     return product.variants.map((variant) => {
@@ -61,11 +67,11 @@ const Actions = ({ product }: { product: ProductType }) => {
         quantity: foundProduct?.stock || "0",
       };
     });
-  }, [session, product.variants, product.inventories]);
+  }, [session, product.variants, inventory]);
 
   const adjustments = useMemo(() => {
     const storeInventories =
-      product.inventories.find((inv) => inv.storeId === session?.storeId)
+      inventory.find((inv: any) => inv.storeId === session?.storeId)
         ?.products || [];
 
     return product.variants.map((variant) => {
@@ -85,7 +91,7 @@ const Actions = ({ product }: { product: ProductType }) => {
         quantity: "0",
       };
     });
-  }, [session, product.variants, product.inventories]);
+  }, [session, product.variants, inventory]);
 
   return (
     <Popup
@@ -112,13 +118,13 @@ const Actions = ({ product }: { product: ProductType }) => {
                 Print Barcode
               </Button>
             </BarcodePopup>
-            {product?.inventories?.length > 0 && (
+            {inventory?.length > 0 && (
               <Popup
                 variant="popover"
                 content={
                   <div className="p-2 md:w-52">
                     <div className="divide-y overflow-y-scroll max-h-[30rem]">
-                      <Inventories data={product.inventories} />
+                      <Inventories data={inventory} />
                     </div>
                   </div>
                 }

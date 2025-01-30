@@ -8,6 +8,12 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 const Inventories = ({ data }: { data: any }) => {
+  const getBadgeClass = (stock: number) => {
+    if (stock >= 5) return "bg-green-600";
+    if (stock > 0 && stock < 5) return "bg-orange-600";
+    return "bg-red-600";
+  };
+
   return (
     <Accordion
       type="single"
@@ -25,8 +31,7 @@ const Inventories = ({ data }: { data: any }) => {
             <div className="flex justify-between gap-4 flex-1 items-center">
               {inv.storeName}
               <Badge
-                variant={(inv.stock || 0) >= 5 ? "success" : "destructive"}
-                className="py-0"
+                className={`py-0 text-foreground ${getBadgeClass(inv.stock)}`}
               >
                 {inv.stock}
               </Badge>
@@ -41,8 +46,7 @@ const Inventories = ({ data }: { data: any }) => {
               >
                 <p className="text-muted-foreground">{p.title}</p>
                 <Badge
-                  variant={(inv.stock || 0) >= 5 ? "success" : "destructive"}
-                  className="py-0"
+                  className={`py-0 text-foreground ${getBadgeClass(p.stock)}`}
                 >
                   {p.stock}
                 </Badge>

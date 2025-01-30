@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { format } from "date-fns";
 import { formatNumber } from "@/lib/utils";
-import { ProductType } from "@/query/products";
+import { getProductInventories, ProductType } from "@/query/products";
 import { Box, Calendar, Ruler, User } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -12,8 +12,11 @@ import Tooltip from "@/components/custom-ui/tooltip";
 import Avatar from "@/components/custom-ui/avatar";
 import Inventories from "./inventories";
 import Actions from "./actions";
+import ErrorBoundary from "@/components/error-boundary";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const ProductCard = ({ product }: { product: ProductType }) => {
+const ProductCard = async ({ product }: { product: ProductType }) => {
+  const { data: inventory } = await getProductInventories(product.id);
   const isArchived = product.status === "archived";
 
   return (
@@ -41,7 +44,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
             <Tooltip
               content={
                 <div className="w-52">
-                  <Inventories data={product.inventories} />
+                  <Inventories data={inventory} />
                 </div>
               }
               variant="card"
@@ -51,8 +54,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
                 <span className="hidden md:inline ml-1">Pieces</span>
               </Badge>
             </Tooltip>
-
-            <Actions product={product} />
+            <Actions product={product} inventory={inventory} />
           </div>
 
           <div className="flex gap-2 items-center text-muted-foreground text-xs col-span-3">

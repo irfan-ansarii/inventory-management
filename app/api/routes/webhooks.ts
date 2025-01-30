@@ -36,8 +36,6 @@ const app = new Hono()
 
     waitUntil(handleWebhhokOrder({ data: webhookOrder, store, topic }));
 
-    console.log(`Event ${topic} order ${webhookOrder.name}...`);
-
     return c.json({ success: true }, 200);
   })
   /********************************************************************* */
@@ -46,8 +44,6 @@ const app = new Hono()
   .post("/tracking", async (c) => {
     const key = c.req.header("x-api-key");
     const payload = await c.req.json();
-
-    console.log("shiprocket webhook event::", payload);
 
     const opts = await db
       .select()

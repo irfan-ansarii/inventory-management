@@ -440,7 +440,7 @@ const app = new Hono()
       const { data, meta } = await getOrders({ shipmentStatus, storeId, page });
 
       res.push(...data);
-      console.log(meta);
+
       if (meta.page === meta.pages) {
         page = null;
       } else {

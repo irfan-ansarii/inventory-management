@@ -57,7 +57,7 @@ const app = new Hono()
     const query = c.req.query();
 
     const { data, meta } = await getBarcodes({ storeId, ...query });
-    console.log(meta);
+
     return c.json({ success: true, data, meta }, 200);
   })
 

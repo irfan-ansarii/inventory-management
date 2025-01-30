@@ -58,8 +58,6 @@ export const getZonedTime = (
   // @ts-ignore
   const date = new TZDate(new Date(), timeZone)?.internal;
 
-  console.log("NEW DATE WITH TIMEZONE::", date);
-
   switch (intervalKey) {
     case "today":
       return { start: startOfDay(date), end: endOfDay(date), interval };

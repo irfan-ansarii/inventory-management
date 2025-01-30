@@ -1,9 +1,8 @@
 import {
-  BarChart,
-  BarChart2,
   BarChartBig,
   ClipboardList,
   FilePenLine,
+  Handshake,
   Inbox,
   LayoutDashboard,
   Settings,
@@ -34,6 +33,11 @@ export const MENU_ITEMS = [
     title: "Products",
     slug: "/products",
     icon: Tags,
+  },
+  {
+    title: "Collaborations",
+    slug: "/collaborations",
+    icon: Handshake,
   },
   {
     title: "Expenses",

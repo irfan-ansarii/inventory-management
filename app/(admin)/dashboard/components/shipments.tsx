@@ -13,7 +13,7 @@ const Shipments = async ({
   const { interval = "today" } = searchParams;
 
   const { data } = await getShipmentsOverview(interval);
-  console.log(data);
+
   //   const chartData = EXPENSE_CATEGORIES.map((exp, i) => {
   //     const item = data.find((d) => d.name === exp);
   //     return {

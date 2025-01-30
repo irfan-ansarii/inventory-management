@@ -11,7 +11,9 @@ export type ProductType = Omit<ProductResponseType, "success">["data"][0];
 
 export type VariantsType = Pick<ProductType, "variants">["variants"];
 
-export type InventoryType = Pick<ProductType, "inventories">["inventories"];
+export type InventoryType = InferResponseType<
+  (typeof client.api.products)[":id"]["inventory"]["$get"]
+>["data"][0];
 
 type CreateResponseType = InferResponseType<typeof client.api.products.$post>;
 type CreateRequestType = InferRequestType<
@@ -63,9 +65,39 @@ export const getProduct = async (id: any) => {
   return result;
 };
 
+/*** Retrieves variants from the API */
 export const getVariants = async (query: Record<string, any>) => {
   const response = await client.api.products.variants.$get({
     query,
+  });
+
+  const result = await response.json();
+
+  if (!result.success) {
+    throw result;
+  }
+  return result;
+};
+
+/*** Retrieves variant data for a specific product from the API */
+export const getProductVariants = async (id: any) => {
+  const response = await client.api.products[":id"].variants.$get({
+    param: { id },
+  });
+
+  const result = await response.json();
+
+  if (!result.success) {
+    throw result;
+  }
+  return result;
+};
+
+/*** Retrieves inventory data for a specific product from the API */
+export const getProductInventories = async (id: any) => {
+  const client = await getClient();
+  const response = await client.api.products[":id"].inventory.$get({
+    param: { id },
   });
 
   const result = await response.json();

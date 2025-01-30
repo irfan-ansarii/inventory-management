@@ -33,7 +33,6 @@ const app = new Hono()
     const timeZone = c.req.header("timeZone");
     const intervalMap = getZonedTime(interval, timeZone);
 
-    console.log(timeZone, intervalMap);
     const response = await getOverview(storeId, intervalMap);
 
     return c.json({ success: true, data: response }, 200);

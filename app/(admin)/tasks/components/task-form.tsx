@@ -184,7 +184,6 @@ const TaskForm = ({
             setOpen(false);
             callback?.(data);
           },
-          onError: (e) => console.log(e),
         }
       );
     } else {
@@ -196,7 +195,6 @@ const TaskForm = ({
             setOpen(false);
             callback?.(data);
           },
-          onError: (e) => console.log(e),
         }
       );
     }
@@ -210,7 +208,7 @@ const TaskForm = ({
       content={
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(onSubmit, (e) => console.log(e))}
+            onSubmit={form.handleSubmit(onSubmit)}
             className="px-2 md:p-4 flex flex-col gap-6 h-full relative"
           >
             <DialogTitle>{taskId ? "Update Task" : "Create Task"}</DialogTitle>

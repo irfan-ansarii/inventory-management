@@ -180,7 +180,6 @@ const OrderForm = ({ defaultValues }: any) => {
 
   // update localsotorage cart
   useEffect(() => {
-    console.log("setting....");
     setTempCart(cartLineItems);
   }, [cartLineItems, watchValues]);
 

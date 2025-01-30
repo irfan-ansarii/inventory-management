@@ -139,38 +139,11 @@ const app = new Hono()
 
     const results = await Promise.all(
       data.map(async (item) => {
-        const { data } = await getInventories({
-          productId: item.id,
-          limit: 100,
-        });
-
         const variants = await getVariants({ productId: item.id });
-
-        const reversed = data.reverse().reduce((acc, item) => {
-          const { storeId, productId, variantId, storeName, stock } = item;
-          const variant = variants.find((v) => v.id === variantId);
-
-          if (!acc[storeId]) {
-            acc[storeId] = { storeId, storeName, products: [], stock: 0 };
-          }
-
-          acc[storeId].stock += stock;
-
-          acc[storeId].products.push({
-            id: item.id,
-            productId: productId,
-            variantId: variantId,
-            title: variant?.title,
-            stock,
-          });
-
-          return acc;
-        }, {} as Record<any, any>);
 
         return {
           ...item,
-          variants: variants,
-          inventories: Object.values(reversed),
+          variants,
         };
       })
     );
@@ -188,6 +161,59 @@ const app = new Hono()
     const { data, meta } = await getVariantsProduct({ ...query, storeId });
 
     return c.json({ success: true, data: data, meta }, 200);
+  })
+
+  /********************************************************************* */
+  /**                            GET VARIANTS                            */
+  /********************************************************************* */
+  .get("/:id/variants", async (c) => {
+    const { id } = c.req.param();
+
+    const response = await getVariants({ productId: id });
+
+    return c.json({ success: true, data: response }, 200);
+  })
+  /********************************************************************* */
+  /**                           GET INVENTORY                            */
+  /********************************************************************* */
+  .get("/:id/inventory", async (c) => {
+    const { id } = c.req.param();
+    const { storeId } = c.get("jwtPayload");
+
+    const variants = await getVariants({ productId: id });
+
+    const { data } = await getInventories({ productId: id, limit: 100 });
+
+    const storeMap = new Map();
+
+    for (const item of data.reverse()) {
+      const { storeId, productId, variantId, storeName, stock } = item;
+      const variant = variants.find((v) => v.id === variantId);
+
+      if (!storeMap.has(storeId)) {
+        storeMap.set(storeId, { storeId, storeName, products: [], stock: 0 });
+      }
+
+      const storeEntry = storeMap.get(storeId);
+      storeEntry.stock += stock;
+      storeEntry.products.push({
+        id: item.id,
+        productId,
+        variantId,
+        title: variant?.title || "Unknown",
+        stock,
+      });
+    }
+
+    const dataArr = Array.from(storeMap.values());
+
+    const currentStoreIndex = dataArr.findIndex(
+      (item) => item.storeId === storeId
+    );
+
+    const [item] = dataArr.splice(currentStoreIndex, 1);
+    dataArr.unshift(item);
+    return c.json({ success: true, data: dataArr }, 200);
   })
 
   /********************************************************************* */
