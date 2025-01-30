@@ -23,16 +23,18 @@ const ErrorFallback = ({
         className
       )}
     >
-      <div className="flex gap-4 items-center flex-col text-base">
+      <div className="flex gap-2 items-center flex-col text-base">
         <span className="w-12 h-12 bg-red-50 dark:bg-red-900/40 text-red-600 rounded-full inline-flex justify-center items-center">
           <TriangleAlert className="w-5 h-5" />
         </span>
-        <p className="font-semibold">
-          {error ? `${message}` : "Something Went Wrong"}
-        </p>
-        <p className="text-muted-foreground text-sm">
-          {description ? description : "An unexpected error has occurred"}
-        </p>
+        <div className="space-y-1.5 text-center">
+          <p className="font-semibold">
+            {error ? `${message}` : "Something Went Wrong"}
+          </p>
+          <p className="text-muted-foreground text-sm">
+            {description ? description : "An unexpected error has occurred"}
+          </p>
+        </div>
       </div>
     </div>
   );

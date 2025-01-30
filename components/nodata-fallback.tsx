@@ -14,10 +14,12 @@ const NoDataFallback = ({ className }: { className?: string }) => {
         <span className="w-12 shadow h-12 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 rounded-full inline-flex justify-center items-center">
           <FileSearch className="w-5 h-5" />
         </span>
-        <p className="font-semibold">No Data Available</p>
-        <p className="text-muted-foreground text-sm text-center">
-          No data is available. Please try removing or adjusting the filter.
-        </p>
+        <div className="space-y-1.5 text-center">
+          <p className="font-semibold">No Data Available</p>
+          <p className="text-muted-foreground text-sm text-center">
+            No data is available. Please try removing or adjusting the filter.
+          </p>
+        </div>
       </div>
     </div>
   );

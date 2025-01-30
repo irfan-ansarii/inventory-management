@@ -14,10 +14,12 @@ const NotFoundFallback = ({ className }: { className?: string }) => {
         <span className="w-12 shadow h-12 bg-yellow-50 dark:bg-yellow-900/40 text-yellow-600 rounded-full inline-flex justify-center items-center">
           <FileSearch className="w-5 h-5" />
         </span>
-        <p className="font-semibold">Page not found.</p>
-        <p className="text-muted-foreground text-sm">
-          The page you are looking for does not exist!
-        </p>
+        <div className="space-y-1 text-center">
+          <p className="font-semibold">Page not found.</p>
+          <p className="text-muted-foreground text-sm">
+            The page you are looking for does not exist!
+          </p>
+        </div>
       </div>
     </div>
   );

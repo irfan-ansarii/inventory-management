@@ -38,9 +38,13 @@ export function useRouterStuff() {
   }) => {
     const newParams = new URLSearchParams(searchParams);
     if (set) {
-      Object.entries(set).forEach(([k, v]) =>
-        newParams.set(k, Array.isArray(v) ? v.join(arrayDelimiter) : v)
-      );
+      Object.entries(set).forEach(([k, v]) => {
+        if (k === "q") {
+          newParams.keys().forEach((k) => newParams.delete(k));
+        }
+
+        newParams.set(k, Array.isArray(v) ? v.join(arrayDelimiter) : v);
+      });
     }
     if (del) {
       if (Array.isArray(del)) {

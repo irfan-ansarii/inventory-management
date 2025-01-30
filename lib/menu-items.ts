@@ -36,7 +36,7 @@ export const MENU_ITEMS = [
   },
   {
     title: "Collaborations",
-    slug: "/collaborations",
+    slug: "/collabs",
     icon: Handshake,
   },
   {

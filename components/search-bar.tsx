@@ -6,23 +6,6 @@ import { Search, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useRouterStuff } from "@/hooks/use-router-stuff";
 
-// Debounce helper function to prevent frequent updates
-const useDebounce = (value: string, delay: number) => {
-  const [debouncedValue, setDebouncedValue] = useState(value);
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
-
-    return () => {
-      clearTimeout(handler); // Cleanup on unmount or value change
-    };
-  }, [value, delay]);
-
-  return debouncedValue;
-};
-
 const SearchBar = ({
   containerClassName,
   inputClassName,
@@ -33,18 +16,14 @@ const SearchBar = ({
   const { queryParams, searchParamsObj } = useRouterStuff();
   const [value, setValue] = useState(searchParamsObj.q || "");
 
-  // Debounce the value to prevent excessive query updates
-  const debouncedValue = useDebounce(value, 300); // Adjust the delay as needed
-
   useEffect(() => {
-    if (debouncedValue) {
-      queryParams({ set: { q: debouncedValue } });
+    if (value) {
+      queryParams({ set: { q: value } });
     } else if (searchParamsObj.q !== "") {
       queryParams({ del: "q" });
     }
-  }, [debouncedValue]); // Only runs when the debounced value changes
+  }, [value]);
 
-  // Memoizing the clear input function to prevent re-renders
   const clearInput = useCallback(() => {
     setValue("");
   }, []);

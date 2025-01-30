@@ -21,7 +21,6 @@ import {
 
 const createdBy = alias(users, "createdBy");
 const updatedBy = alias(users, "updatedBy");
-
 const supplier = alias(users, "supplier");
 
 // create purchase
@@ -114,6 +113,7 @@ export const getPurchases = async (params: Record<string, any>) => {
     .select({ total: count(purchase) })
     .from(purchase)
     .where(filters)
+    .leftJoin(supplier, eq(supplier.id, purchase.supplierId))
     .then(findFirst);
 
   return {
