@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import Cart from "./components/cart";
 
 const navs = [
@@ -19,6 +20,8 @@ const navs = [
   },
 ];
 export default async function Home() {
+  redirect("/dashboard");
+
   return (
     <>
       {/* backgroudn and gradient/grid */}
