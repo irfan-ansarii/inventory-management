@@ -48,7 +48,7 @@ const Actions = ({
 
   const barcodes = useMemo(() => {
     const storeInventories =
-      inventory.find((inv: any) => inv.storeId === session?.storeId)
+      inventory.find((inv: any) => inv?.storeId === session?.storeId)
         ?.products || [];
 
     return product.variants.map((variant) => {
@@ -71,7 +71,7 @@ const Actions = ({
 
   const adjustments = useMemo(() => {
     const storeInventories =
-      inventory.find((inv: any) => inv.storeId === session?.storeId)
+      inventory.find((inv: any) => inv?.storeId === session?.storeId)
         ?.products || [];
 
     return product.variants.map((variant) => {
