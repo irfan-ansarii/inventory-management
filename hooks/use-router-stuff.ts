@@ -40,7 +40,9 @@ export function useRouterStuff() {
     if (set) {
       Object.entries(set).forEach(([k, v]) => {
         if (k === "q") {
-          newParams.keys().forEach((k) => newParams.delete(k));
+          Array.from(newParams.keys()).forEach((key) => {
+            newParams.delete(key);
+          });
         }
 
         newParams.set(k, Array.isArray(v) ? v.join(arrayDelimiter) : v);

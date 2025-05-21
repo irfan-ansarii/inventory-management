@@ -96,7 +96,7 @@ const BarcodePopup = ({
         variantId: selected.variantId,
         title: selected.title,
         variantTitle: selected.variantTitle,
-        barcode: selected.barcode,
+        barcode: selected.barcode!,
         image: selected.image,
         value: selected.value,
         quantity: selected.quantity,

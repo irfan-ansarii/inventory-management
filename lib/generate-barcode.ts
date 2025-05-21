@@ -97,6 +97,12 @@ export async function drawBarcode(
   y += 3.5;
 
   options?.forEach((opt) => {
+    if (
+      opt.name.toLowerCase() === "default" ||
+      opt.value.toLowerCase() === "default"
+    ) {
+      return;
+    }
     const textWidth = doc.getTextWidth(opt?.name);
     doc.text(`${opt?.name}:`, x, y);
     doc.text(opt?.value, x + textWidth + 2, y);
@@ -129,7 +135,6 @@ export const generateBarcode = async (
   items: LabelItem[]
 ) => {
   const { width, columns, gap, top, left } = config;
-
   const ids = [] as number[];
   const list: LabelItem[] = [];
 

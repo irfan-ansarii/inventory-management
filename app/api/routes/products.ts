@@ -66,7 +66,7 @@ const productUpdateSchema = productCreateSchema
   });
 
 export const generateBarcode = (id: number) => {
-  return `GN${`${id}`.padStart(6, "0")}`;
+  return `${id}`.padStart(8, "0");
 };
 
 const app = new Hono()

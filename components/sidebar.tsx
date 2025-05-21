@@ -26,15 +26,14 @@ const Sidebar = async ({ className }: { className?: string }) => {
     <div className={cn("flex h-full max-h-screen flex-col gap-2", className)}>
       <div className="flex items-center px-5 pt-10 md:pt-5">
         <Link
-          className="flex w-full justify-center items-center gap-2 font-semibold relative h-[40px]"
+          className="flex w-full justify-start items-center gap-2 font-semibold relative h-[40px]"
           href="/dashboard"
         >
           <Image
             alt="Logo"
             src={session?.store?.logo as string}
-            width={200}
-            height={100}
-            className="dark:invert"
+            fill
+            className="dark:invert object-contain !w-auto"
           />
         </Link>
       </div>
